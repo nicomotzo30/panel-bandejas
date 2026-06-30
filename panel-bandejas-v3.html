@@ -381,7 +381,7 @@
 // ═══════════════════════════════════════
 const COMPANY_NAME     = "TU EMPRESA S.A.";
 const FETCH_FROM_SHEET = true;
-const SHEET_URL        = "https://script.google.com/macros/s/AKfycbyZw3w91WCIFBnCeGbRQiMgRQ9E1Ba9SIfqqH_wTvPBECq_3ytso_1_ZnGemOVSpEQcvw/exec";
+const SHEET_URL        = "https://script.google.com/macros/s/AKfycbyDnbmU_i82hrrI85qS1j08F2sJgd1udQnfvDU-F_qFk4sAyO-JlktgNbH65ARpjnqnyg/exec";
 const REFRESH_MS       = 15000;
 const TURNO_HORAS      = 10; // 7 a 17hs
 
@@ -488,15 +488,15 @@ function getDemoData() {
     empresa: COMPANY_NAME,
     mesRef: "FEB 2026",
     maquinas: [
-      { id:1, estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Rotura",       rendimiento:33 },
-      { id:2, estado:"active",   articulo:"PLATO P 20 ALUPAQ",     operario:"Franco", motivoParada:null,           rendimiento:38 },
-      { id:3, estado:"active",   articulo:"PLATO P 23",            operario:"Naim",   motivoParada:null,           rendimiento:49 },
-      { id:4, estado:"active",   articulo:"BANDEJA C 200 ALUPAQ",  operario:"Claudio",motivoParada:null,           rendimiento:48 },
-      { id:5, estado:"active",   articulo:"BANDEJA F 75",          operario:"Claudio",motivoParada:null,           rendimiento:46 },
-      { id:6, estado:"active",   articulo:"BANDEJA F 100",         operario:"Matías", motivoParada:null,           rendimiento:48 },
-      { id:7, estado:"paused",   articulo:"BANDEJA B/4 F 200 ALUPAQ", operario:"José",motivoParada:"Fin de bobina",rendimiento:33 },
-      { id:8, estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Sin operario", rendimiento:46 },
-      { id:9, estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Mantenimiento",rendimiento:31 },
+      { id:1,  estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Rotura",       rendimiento:33 },
+      { id:2,  estado:"active",   articulo:"PLATO P 20 ALUPAQ",     operario:"Franco", motivoParada:null,           rendimiento:38 },
+      { id:3,  estado:"active",   articulo:"PLATO P 23",            operario:"Naim",   motivoParada:null,           rendimiento:49 },
+      { id:4,  estado:"active",   articulo:"BANDEJA C 200 ALUPAQ",  operario:"Claudio",motivoParada:null,           rendimiento:48 },
+      { id:5,  estado:"active",   articulo:"BANDEJA F 75",          operario:"Claudio",motivoParada:null,           rendimiento:46 },
+      { id:6,  estado:"active",   articulo:"BANDEJA F 100",         operario:"Matías", motivoParada:null,           rendimiento:48 },
+      { id:8,  estado:"paused",   articulo:"BANDEJA B/4 F 200 ALUPAQ", operario:"José",motivoParada:"Fin de bobina",rendimiento:33 },
+      { id:9,  estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Mantenimiento",rendimiento:31 },
+      { id:10, estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Sin operario", rendimiento:46 },
     ],
     plan: [
       { producto:"BANDEJA F 75",         prensa:"P5",  fecha:"Hoy" },
