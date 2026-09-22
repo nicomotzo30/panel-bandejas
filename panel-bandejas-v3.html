@@ -631,17 +631,33 @@ function updateClock() {
 // ═══════════════════════════════════════
 // FETCH
 // ═══════════════════════════════════════
+let lastGoodData = null;
+
 async function fetchAndRender() {
   let data;
   if (FETCH_FROM_SHEET) {
-    try { const r = await fetch(SHEET_URL); data = await r.json(); }
-    catch(e) { console.warn("Sheet no disponible, usando demo"); data = getDemoData(); }
+    try {
+      const r = await fetch(SHEET_URL);
+      const json = await r.json();
+
+      if (json && json.error) {
+        throw new Error('Backend devolvió error: ' + json.error);
+      }
+      if (!json || !Array.isArray(json.maquinas)) {
+        throw new Error('Respuesta sin formato esperado');
+      }
+
+      lastGoodData = json;
+      data = json;
+    } catch (e) {
+      console.error('Fetch a la planilla falló:', e);
+      data = lastGoodData || getDemoData();
+    }
   } else {
     data = getDemoData();
   }
   renderAll(data);
 }
-
 // ═══════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════
