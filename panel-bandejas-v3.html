@@ -252,6 +252,35 @@
     font-size:11px; color:var(--muted); letter-spacing:1px;
   }
 
+  /* objetivo del mes */
+  .objetivo-box {
+    display:flex; flex-direction:column; align-items:center;
+    flex:1; justify-content:center; gap:6px; padding:6px 0 2px;
+  }
+  .objetivo-num {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:64px; font-weight:900; line-height:1; letter-spacing:1px;
+    color:var(--text);
+  }
+  .objetivo-of {
+    font-size:12px; letter-spacing:1px; color:var(--muted); font-weight:600;
+  }
+  .objetivo-of span { color:var(--text); font-weight:700; }
+  .objetivo-bar-track {
+    width:100%; height:10px; border-radius:5px;
+    background:rgba(255,255,255,.06); overflow:hidden; margin-top:6px;
+  }
+  .objetivo-bar-fill {
+    height:100%; border-radius:5px;
+    background:var(--green);
+    transition:width .4s ease;
+  }
+  .objetivo-pct {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:22px; font-weight:800; letter-spacing:1px;
+    color:var(--green); margin-top:2px;
+  }
+
   /* stats box */
   .stats-box {
     background:var(--surface);
@@ -332,10 +361,17 @@
   <!-- RIGHT COLUMN -->
   <div class="right-col">
 
-    <!-- PLAN DE PRODUCCIÓN -->
+    <!-- OBJETIVO DE PRODUCCIÓN -->
     <div class="panel-box">
-      <div class="panel-title">Plan de Producción</div>
-      <div class="plan-list" id="planList"></div>
+      <div class="panel-title">Objetivo del Mes</div>
+      <div class="objetivo-box">
+        <div class="objetivo-num" id="objProducido">—</div>
+        <div class="objetivo-of">de <span id="objMeta">—</span> unidades</div>
+        <div class="objetivo-bar-track">
+          <div class="objetivo-bar-fill" id="objBarFill" style="width:0%"></div>
+        </div>
+        <div class="objetivo-pct" id="objPct">—</div>
+      </div>
     </div>
 
     <!-- STATS RÁPIDOS -->
@@ -487,6 +523,7 @@ function getDemoData() {
   return {
     empresa: COMPANY_NAME,
     mesRef: "FEB 2026",
+    objetivo: { producido: 1245000, meta: 4000000, progresoPct: 31.1 },
     maquinas: [
       { id:1,  estado:"inactive", articulo:null,                    operario:null,     motivoParada:"Rotura",       rendimiento:33 },
       { id:2,  estado:"active",   articulo:"PLATO P 20 ALUPAQ",     operario:"Franco", motivoParada:null,           rendimiento:38 },
@@ -592,21 +629,16 @@ function renderAll(data) {
     tcEl.classList.remove("flash"); void tcEl.offsetWidth; tcEl.classList.add("flash");
   }
 
-  // Plan
-  const planList = document.getElementById("planList");
-  planList.innerHTML = "";
-  (data.plan||[]).forEach(p => {
-    const row = document.createElement("div");
-    row.className = "plan-row";
-    row.innerHTML = `
-      <div class="plan-product">${p.producto}</div>
-      <div class="plan-meta">
-        <span class="plan-fecha">${p.fecha||""}</span>
-        <span class="plan-prensa">${p.prensa ? "· "+p.prensa : ""}</span>
-      </div>
-    `;
-    planList.appendChild(row);
-  });
+  // Objetivo del mes
+  const obj = data.objetivo || { producido:0, meta:0, progresoPct:null };
+  const pct = obj.progresoPct != null
+    ? obj.progresoPct
+    : (obj.meta > 0 ? Math.round((obj.producido/obj.meta)*1000)/10 : null);
+
+  document.getElementById("objProducido").textContent = fmt(obj.producido);
+  document.getElementById("objMeta").textContent = obj.meta ? fmt(obj.meta) : "—";
+  document.getElementById("objPct").textContent = pct != null ? `${pct.toLocaleString("es-AR")}%` : "—";
+  document.getElementById("objBarFill").style.width = pct != null ? `${Math.min(pct,100)}%` : "0%";
 
   // Last update
   const now = new Date();
